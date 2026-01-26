@@ -1,13 +1,5 @@
 import SwiftUI
 
-struct MyApp : App {
-    var body : some Scene {
-        WindowGroup {
-            ContentView()
-        }
-    }
-}
-
 struct ContentView: View
 {
     @State private var clients : [Client] = []

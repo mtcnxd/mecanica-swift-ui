@@ -6,7 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D92736112F2834A20029CBC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D92736102F2834A20029CBC4 /* Main.storyboard */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		D92736102F2834A20029CBC4 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D9C108F12F210BC500C48282 /* mecanicaRubio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mecanicaRubio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -32,6 +37,7 @@
 		D9C108E82F210BC500C48282 = {
 			isa = PBXGroup;
 			children = (
+				D92736102F2834A20029CBC4 /* Main.storyboard */,
 				D9C108F32F210BC500C48282 /* mecanicaRubio */,
 				D9C108F22F210BC500C48282 /* Products */,
 			);
@@ -109,6 +115,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D92736112F2834A20029CBC4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

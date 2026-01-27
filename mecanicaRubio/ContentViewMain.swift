@@ -1,12 +1,35 @@
 import SwiftUI
 
-struct ContentView: View
+struct ContentViewMain: View
 {
     @State private var clients : [Client] = []
     @State private var name : String = ""
     @State private var isShow : Bool = false
+    @State private var isOpen : Bool = false
+    @State private var selection: SidebarItem? = .dashboard
     
     var body: some View {
+        NavigationSplitView {
+               List(SidebarItem.allCases, selection: $selection) { item in
+                   Label(item.title, systemImage: item.icon)
+               }
+               .listStyle(.sidebar)
+           } detail: {
+               switch selection {
+               case .dashboard:
+                   ContentViewClients()
+                   // Text("Dashboard")
+               case .clients:
+                   Text("Clientes")
+               case .settings:
+                   Text("Configuración")
+               case nil:
+                   Text("Selecciona una opción")
+               }
+           }
+           .frame(minWidth: 700, minHeight: 400)
+       
+        /*
         VStack {
             HStack {
                 TextField ("Buscar cliente por nombre", text: $name)
@@ -32,8 +55,9 @@ struct ContentView: View
             }
                 
             HStack () {
-                Button("Cliente Info") {
+                Button("Cliente to open content view") {
                     print("Button client info clicked!")
+                    isOpen = true
                 }
                 
                 Button("Click to open alert") {
@@ -44,6 +68,7 @@ struct ContentView: View
         }
         .padding()
         .task {
+            // TODO: Change method to init in viewController
             clients = await ClientViewModel().clients.data
         }
         .alert( isPresented: $isShow ){
@@ -52,9 +77,9 @@ struct ContentView: View
                 message: Text("Hola mundo"),
             )
         }
+        .sheet(isPresented: $isOpen){
+            ContentViewServices()
+        }
+         */
     }
-}
-
-#Preview {
-    ContentView()
 }

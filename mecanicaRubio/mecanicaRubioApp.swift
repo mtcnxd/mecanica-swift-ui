@@ -11,7 +11,7 @@ import SwiftUI
 struct mecanicaRubioApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentViewMain()
         }
     }
 }

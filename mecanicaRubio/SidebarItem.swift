@@ -1,30 +1,23 @@
-//
-//  SidebarItem.swift
-//  mecanicaRubio
-//
-//  Created by mtcnxd on 27/01/26.
-//
-
 enum SidebarItem: String, CaseIterable, Identifiable {
-    case dashboard
     case clients
-    case settings
+    case services
+    case investments
 
     var id: String { rawValue }
 
     var title: String {
         switch self {
-        case .dashboard: return "Dashboard"
         case .clients: return "Clientes"
-        case .settings: return "Configuración"
+        case .services: return "Services"
+        case .investments: return "Investments"
         }
     }
 
     var icon: String {
         switch self {
-        case .dashboard: return "speedometer"
-        case .clients: return "person.3"
-        case .settings: return "gear"
+        case .clients: return "person"
+        case .services: return "car"
+        case .investments: return "chart.line.uptrend.xyaxis"
         }
     }
 }

@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ClientListView : View {
+struct ListViewRow : View {
     let name : String
     let phone : String
     let email : String
@@ -41,7 +41,7 @@ struct ClientListView : View {
 }
 
 #Preview {
-    ClientListView(
+    ListViewRow(
         name: "Marcos Tzuc",
         phone: "Marcos Tzuc",
         email: "mtc.nxd@gmail.com",

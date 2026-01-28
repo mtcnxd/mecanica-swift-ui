@@ -12,3 +12,8 @@ struct Client : Codable, Identifiable {
     let phone : String
     let status : String
 }
+
+struct Service : Codable, Identifiable {
+    let id : Int
+    let car : String
+}

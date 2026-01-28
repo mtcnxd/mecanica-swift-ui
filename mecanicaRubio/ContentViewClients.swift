@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct ContentViewClients: View {
-    
+struct ContentViewClients: View
+{
     @State var criteria : String = ""
     @StateObject var api = ViewModelClients()
     
@@ -11,14 +11,17 @@ struct ContentViewClients: View {
             HStack {
                 TextField("Client", text: $criteria)
                 
-                Button("Search") {
+                Button(action: {
                     api.searchClient(criteria: criteria)
+                }) {
+                    Image(systemName: "magnifyingglass")
+                    Text("Buscar")
                 }
             }
             
             List {
                 ForEach(api.clients){ client in
-                    ClientListView(name: client.name, phone: client.phone, email: client.email, status: client.status)
+                    ListViewRow(name: client.name, phone: client.phone, email: client.email, status: client.status)
                 }
             }
         }

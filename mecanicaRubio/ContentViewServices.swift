@@ -28,6 +28,6 @@ struct ContentViewServices: View {
                 print("Ok")
             }
         }
-        .padding(50)
+        .padding(20)
     }
 }

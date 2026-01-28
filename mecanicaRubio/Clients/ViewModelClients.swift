@@ -1,27 +1,25 @@
 import Foundation
+import Combine
 
-@Observable
-final class ViewModelClients {
-    
-    var names : [String]
-    // var response : ClientResponse
+class ViewModelClients : ObservableObject {
+
+    @Published var clients = [Client]()
     
     init() {
-        self.names = ["marcos", "juan"]
+        self.getClients()
+    }
         
-        let hola = self.getClients()
-        
-        print(hola)
-        
-        // self.names = names
-        // self.response = response
-        
-        print(self.names)
+    func getClients() {
+        Task {
+            let response = try await Repository().getClients()
+            self.clients = response.data
+        }
     }
     
-    func getClients() -> ClientResponse {
-        let datos = Client(id: 1, name: "Marcos Tzuc", email: "mtc.nxd@gmail.com", phone: "9991210261", status: "Active")
-        
-        return ClientResponse(success: true, data: [datos])
+    func searchClient(criteria : String){
+        Task {
+            let response = try await Repository().searchClient(criteria: criteria)
+            self.clients = response.data
+        }
     }
 }

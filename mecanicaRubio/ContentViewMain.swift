@@ -28,58 +28,5 @@ struct ContentViewMain: View
                }
            }
            .frame(minWidth: 700, minHeight: 400)
-       
-        /*
-        VStack {
-            HStack {
-                TextField ("Buscar cliente por nombre", text: $name)
-                Button(action: {
-                    Task {
-                        let info = await ClientViewModel().searchClient(criteria: name)
-                        clients = info.data
-                    }
-                })
-                {
-                    Image(systemName: "magnifyingglass")
-                    Text("Buscar")
-                }
-            }
-            
-            List (clients) { client in
-                ClientListView(
-                    name: client.name,
-                    phone: client.phone,
-                    email: client.email,
-                    status: client.status
-                )
-            }
-                
-            HStack () {
-                Button("Cliente to open content view") {
-                    print("Button client info clicked!")
-                    isOpen = true
-                }
-                
-                Button("Click to open alert") {
-                    print("Button services info clicked!")
-                    isShow = true
-                }
-            }
-        }
-        .padding()
-        .task {
-            // TODO: Change method to init in viewController
-            clients = await ClientViewModel().clients.data
-        }
-        .alert( isPresented: $isShow ){
-            Alert(
-                title: Text("Titulo de la alerta"),
-                message: Text("Hola mundo"),
-            )
-        }
-        .sheet(isPresented: $isOpen){
-            ContentViewServices()
-        }
-         */
     }
 }

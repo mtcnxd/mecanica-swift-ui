@@ -12,13 +12,3 @@ struct Client : Codable, Identifiable {
     let phone : String
     let status : String
 }
-
-extension Client {
-    static let testData = Client(
-        id: 1,
-        name: "Marcos Tzuc Cen",
-        email: "mtc.nxd@gmail.com",
-        phone: "9991210261",
-        status : "Activo"
-    )
-}

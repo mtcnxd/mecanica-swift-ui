@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct ListViewRow : View {
-    let name : String
-    let phone : String
-    let email : String
-    let status : String
+    
+    let client : Client
+    
+    @State var visible = false
     
     var body: some View {
         HStack {
@@ -14,13 +14,13 @@ struct ListViewRow : View {
                     .frame(width: 30, height: 30)
                 
                 VStack (alignment: .leading) {
-                    Text(name)
+                    Text(client.name)
                         .font(.headline)
                     
-                    Text(phone)
+                    Text(client.phone)
                         .font(.subheadline)
                     
-                    Text(email)
+                    Text(client.email)
                         .font(.subheadline)
                         .foregroundStyle(.blue)
                 }
@@ -30,21 +30,34 @@ struct ListViewRow : View {
             Spacer()
             
             Button(action: {
-                print("Hola mundo")
+                print("client id: \(client.id)")
+                
+                Task {
+                    let info = try await Repository().getServices(id: String(client.id))
+                    visible = true
+                    print(info.data)
+                }
             }){
                 Image(systemName: "info.circle")
-                Text(status)
+                Text("Services")
             }
         }
         .padding(2)
+        .sheet(isPresented: $visible){
+            ContentViewServiceModal(car: "Nissan")
+        }
+        
     }
 }
 
 #Preview {
     ListViewRow(
-        name: "Marcos Tzuc",
-        phone: "Marcos Tzuc",
-        email: "mtc.nxd@gmail.com",
-        status : "Active"
+        client: Client(
+            id: 1,
+            name: "Marcos Tzuc Cen",
+            email: "mtc.nxd@gmail.com",
+            phone: "9991210261",
+            status: "Active"
+        )
     )
 }

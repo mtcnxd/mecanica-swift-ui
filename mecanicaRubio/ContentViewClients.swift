@@ -21,7 +21,7 @@ struct ContentViewClients: View
             
             List {
                 ForEach(api.clients){ client in
-                    ListViewRow(name: client.name, phone: client.phone, email: client.email, status: client.status)
+                    ListViewRow(client: client)
                 }
             }
         }

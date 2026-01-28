@@ -7,14 +7,14 @@ protocol DataRepository
 
 extension DataRepository
 {
-    func getClients() async throws -> ClientResponse {
+    func getClients() async throws -> ModelClient {
         let url = URL(string: "https://mecanicarubio.com/api/clients/all")!
         let (data, _) = try await URLSession.shared.data(from: url)
 
-        return try JSONDecoder().decode(ClientResponse.self, from: data)
+        return try JSONDecoder().decode(ModelClient.self, from: data)
     }
     
-    func searchClient(criteria : String) async throws -> ClientResponse {
+    func searchClient(criteria : String) async throws -> ModelClient {
         var params = URLComponents(string: "https://mecanicarubio.com/api/clients/search")!
         
         params.queryItems = [
@@ -27,7 +27,14 @@ extension DataRepository
         
         let(data, _) = try await URLSession.shared.data(from: url)
         
-        return try JSONDecoder().decode(ClientResponse.self, from: data)
+        return try JSONDecoder().decode(ModelClient.self, from: data)
+    }
+    
+    func getServices(id : String) async throws -> ModelService {
+        let url = URL(string: "https://mecanicarubio.com/api/clients/services/\(id)")!
+        let (data, _) = try await URLSession.shared.data(from: url)
+
+        return try JSONDecoder().decode(ModelService.self, from: data)
     }
 }
 

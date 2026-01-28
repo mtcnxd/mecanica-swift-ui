@@ -1,6 +1,6 @@
 import Foundation
 
-struct ClientResponse : Codable {
+struct ModelClient : Codable {
     let success : Bool
     let data : [Client]
 }
@@ -11,9 +11,4 @@ struct Client : Codable, Identifiable {
     let email : String
     let phone : String
     let status : String
-}
-
-struct Service : Codable, Identifiable {
-    let id : Int
-    let car : String
 }

@@ -13,6 +13,8 @@ struct ContentViewInvestments: View {
     @State var balance = ""
     @State var visible = false
     
+    @StateObject var Investments = ViewModelInvestment()
+    
     let options = ["Yo te presto","Doopla","GBM Trading"]
     
     var body: some View {

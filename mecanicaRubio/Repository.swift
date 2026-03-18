@@ -36,6 +36,13 @@ extension DataRepository
 
         return try JSONDecoder().decode(ModelService.self, from: data)
     }
+    
+    func getInvestments() async throws -> ModelCrypto {
+        let url = URL(string: "https://mecanicarubio.com/api/sensors/trades")!
+        let (data, _) = try await URLSession.shared.data(from: url)
+        return try JSONDecoder().decode(ModelCrypto.self, from: data)
+        
+    }
 }
 
 struct Repository : DataRepository

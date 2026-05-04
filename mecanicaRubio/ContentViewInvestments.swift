@@ -15,7 +15,14 @@ struct ContentViewInvestments: View {
     
     @StateObject var Investments = ViewModelInvestment()
     
-    let options = ["Yo te presto","Doopla","GBM Trading"]
+    let options = [
+        "Yo te presto",
+        "Doopla",
+        "GBM Trading",
+        "Stori Card"
+    ]
+    
+    @State var responseList: [InvestmentItem] = []
     
     var body: some View {
         VStack (alignment: .leading) {
@@ -45,9 +52,21 @@ struct ContentViewInvestments: View {
                         RoundedRectangle(cornerRadius: 7).stroke(Color.gray)
                     )
                 
+                List {
+                    ForEach(responseList) { item in
+                        ListViewItem(investmentItem: item)
+                    }
+                }
+                
                 Button(action: {
                     visible = true
-                    print("save")
+                    responseList = Investments.investmentsItems
+                    /*
+                    responseList.forEach { item in
+                        print("Name: \(item.name) value: \(item.current_amount)")
+                    }
+                     */
+
                 }){
                     Image(systemName: "square.and.arrow.down")
                     Text("Update")

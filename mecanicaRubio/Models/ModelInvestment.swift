@@ -1,11 +1,11 @@
 import Foundation
 
-struct InvestmentClient : Codable {
+struct ModelInvestment : Codable {
     let total : String
-    let items : [Items]
+    let items : [InvestmentItem]
 }
 
-struct Items : Codable, Identifiable {
+struct InvestmentItem : Codable, Identifiable {
     let id : Int
     let name : String
     let last_amount : String

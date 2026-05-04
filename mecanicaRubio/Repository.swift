@@ -10,7 +10,6 @@ extension DataRepository
     func getClients() async throws -> ModelClient {
         let url = URL(string: "https://mecanicarubio.com/api/clients/all")!
         let (data, _) = try await URLSession.shared.data(from: url)
-
         return try JSONDecoder().decode(ModelClient.self, from: data)
     }
     
@@ -33,15 +32,18 @@ extension DataRepository
     func getServices(id : String) async throws -> ModelService {
         let url = URL(string: "https://mecanicarubio.com/api/clients/services/\(id)")!
         let (data, _) = try await URLSession.shared.data(from: url)
-
         return try JSONDecoder().decode(ModelService.self, from: data)
     }
     
     func getInvestments() async throws -> ModelCrypto {
         let url = URL(string: "https://mecanicarubio.com/api/sensors/trades")!
         let (data, _) = try await URLSession.shared.data(from: url)
-        return try JSONDecoder().decode(ModelCrypto.self, from: data)
         
+        if let jsonString = String(data: data, encoding: .utf8){
+            print(jsonString)
+        }
+        
+        return try JSONDecoder().decode(ModelCrypto.self, from: data);
     }
 }
 

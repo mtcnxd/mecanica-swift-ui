@@ -1,10 +1,3 @@
-//
-//  ContentViewInvestments.swift
-//  mecanicaRubio
-//
-//  Created by mtcnxd on 27/01/26.
-//
-
 import SwiftUI
 
 struct ContentViewInvestments: View {
@@ -13,7 +6,8 @@ struct ContentViewInvestments: View {
     @State var balance = ""
     @State var visible = false
     
-    @StateObject var Investments = ViewModelInvestment()
+    @StateObject var vmInvestments = ViewModelInvestment()
+    @State var responseList: [InvestmentItem] = []
     
     let options = [
         "Yo te presto",
@@ -21,8 +15,6 @@ struct ContentViewInvestments: View {
         "GBM Trading",
         "Stori Card"
     ]
-    
-    @State var responseList: [InvestmentItem] = []
     
     var body: some View {
         VStack (alignment: .leading) {
@@ -38,52 +30,52 @@ struct ContentViewInvestments: View {
                     print("You have selected: \(selected) option")
                 }) {
                     Image(systemName: "tray.and.arrow.down")
-                    Text("Get")
-                }
-            }
-            
-            Spacer()
-            
-            HStack {
-                TextField("Balance", text: $balance)
-                    .frame(width: 200)
-                    .background(Color.white .opacity(0.2))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 7).stroke(Color.gray)
-                    )
-                
-                List {
-                    ForEach(responseList) { item in
-                        ListViewItem(investmentItem: item)
-                    }
+                    Text("Show Selected")
                 }
                 
                 Button(action: {
-                    visible = true
-                    responseList = Investments.investmentsItems
-                    /*
-                    responseList.forEach { item in
-                        print("Name: \(item.name) value: \(item.current_amount)")
+                    Task {
+                        await vmInvestments.getInvestments()
+                        responseList = vmInvestments.investments
                     }
-                     */
-
+                    
                 }){
                     Image(systemName: "square.and.arrow.down")
-                    Text("Update")
+                    Text("Get Balances")
                 }
+
+            }
+            
+            VStack {
+                if (vmInvestments.isLoading){
+                    ProgressView()
+                } else if let error = vmInvestments.errorMessage {
+                    Text(error)
+                } else {
+                    List {
+                        ForEach(responseList) { item in
+                            ListViewItem(investmentItem: item)
+                        }
+                    }
+                }
+            }
+            .onChange(of: vmInvestments.errorMessage) {
+                if vmInvestments.errorMessage != nil {
+                    visible = true
+                    print("Error message")
+                }
+            }
+            .alert(isPresented: $visible) {
+                Alert(
+                    title: Text("Error retriving data"),
+                    message: Text(vmInvestments.errorMessage!),
+                    primaryButton: .default(Text("Accept")),
+                    secondaryButton: .default(Text("Close"))
+                )
             }
             
         }
         .padding(20)
-        .alert(isPresented: $visible) {
-            Alert(
-                title: Text("Message"),
-                message: Text("We can't show your balance currently"),
-                primaryButton: .default(Text("Accept")),
-                secondaryButton: .default(Text("Close"))
-            )
-        }
-    
     }
 }
 

@@ -35,7 +35,7 @@ extension DataRepository
         return try JSONDecoder().decode(ModelService.self, from: data)
     }
     
-    func getInvestments() async throws -> ModelCrypto {
+    func getCryptoInvestments() async throws -> ModelCrypto {
         let url = URL(string: "https://mecanicarubio.com/api/sensors/trades")!
         let (data, _) = try await URLSession.shared.data(from: url)
         
@@ -46,7 +46,7 @@ extension DataRepository
         return try JSONDecoder().decode(ModelCrypto.self, from: data);
     }
     
-    func getCryptoInvestments() async throws -> ModelInvestment {
+    func getInvestments() async throws -> ModelInvestment {
         let url = URL(string: "https://mecanicarubio.com/api/investments/total")!
         let (data, _) = try await URLSession.shared.data(from: url)
         

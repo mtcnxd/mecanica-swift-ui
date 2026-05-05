@@ -3,8 +3,10 @@ import Combine
 
 class ViewModelInvestment : ObservableObject {
     
-    @Published var investments = [Investment]()
-    @Published var investmentsItems = [InvestmentItem]()
+    @Published var investments : [InvestmentItem] = []
+    @Published var investmentsItems : [Investment] = []
+    @Published var errorMessage : String?
+    @Published var isLoading: Bool = false
     
     private let repository : Repository
     
@@ -14,17 +16,30 @@ class ViewModelInvestment : ObservableObject {
     }
     
     func getInvestments() async {
+        isLoading = true
+        errorMessage = nil
+        
         do {
             let response = try await repository.getInvestments()
-            self.investments = response.data
+            self.investments = response.items
+            isLoading = false
         } catch {
             errorMessage = error.localizedDescription
-            print("Error")
+            print("Error: \(error.localizedDescription)")
         }
     }
     
     func getCryptoInvestments() async {
-        let response = try await repository.getCryptoInvestments()
-        self.investmentsItems = response.items
+        isLoading = true
+        errorMessage = nil
+        
+        do {
+            let response = try await repository.getCryptoInvestments()
+            self.investmentsItems = response.data
+            isLoading = false
+        } catch {
+            errorMessage = error.localizedDescription
+            print("Error: \(error.localizedDescription)")
+        }
     }
 }

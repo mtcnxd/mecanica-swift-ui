@@ -10,11 +10,16 @@ import SwiftUI
 struct ListViewItem : View {
     
     let investmentItem : InvestmentItem
-    
+        
     var body: some View {
         HStack {
-            Text(investmentItem.name).font(.headline)
-            Text(investmentItem.current_amount).font(.subheadline)
+            Text(investmentItem.name)
+                .font(.headline)
+                .padding(5)
+            Spacer()
+            Text(investmentItem.current_amount)
+                .font(.subheadline)
+                .padding(5)
         }
     }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ListViewItem : View {
+struct ListViewInvestment : View {
     
     let investmentItem : InvestmentItem
         
@@ -25,7 +25,7 @@ struct ListViewItem : View {
 }
 
 #Preview {
-    ListViewItem(
+    ListViewInvestment(
         investmentItem : InvestmentItem(
             id: 1,
             name: "Yo te Presto",

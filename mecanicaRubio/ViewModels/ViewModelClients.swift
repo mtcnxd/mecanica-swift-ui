@@ -3,23 +3,35 @@ import Combine
 
 class ViewModelClients : ObservableObject {
 
-    @Published var clients = [Client]()
+    @Published var clients: ModelClients?
+    @Published var isLoading: Bool = false
     
-    init() {
-        self.getClients()
+    private let repository: Repository
+    
+    init(repository: Repository = Repository()) {
+        self.repository = repository
+        
+        print("Start class View Model Clients")
     }
         
-    func getClients() {
-        Task {
-            let response = try await Repository().getClients()
-            self.clients = response.data
+    func getClients() async {
+        isLoading = true
+        print("Loading clients list")
+        do {
+            clients = try await repository.getClients()
+        } catch {
+            print (error)
         }
+        isLoading = false
     }
     
-    func searchClient(criteria : String){
-        Task {
-            let response = try await Repository().searchClient(criteria: criteria)
-            self.clients = response.data
+    func getClientDetails(criteria : String) async {
+        isLoading = true
+        do {
+            clients = try await repository.searchClient(criteria: criteria)
+        } catch {
+            print(error)
         }
+        isLoading = false
     }
 }

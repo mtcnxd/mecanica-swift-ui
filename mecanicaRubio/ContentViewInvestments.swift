@@ -54,7 +54,7 @@ struct ContentViewInvestments: View {
                 } else {
                     List {
                         ForEach(responseList) { item in
-                            ListViewItem(investmentItem: item)
+                            ListViewInvestment(investmentItem: item)
                         }
                     }
                 }

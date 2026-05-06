@@ -7,15 +7,15 @@ protocol DataRepository
 
 extension DataRepository
 {
-    func getClients() async throws -> ModelClient {
-        let url = URL(string: "https://mecanicarubio.com/api/clients/all")!
+    func getClients() async throws -> ModelClients {
+        let url = URL(string: "https://mecanicarubio.com/api/clients")!
         let (data, _) = try await URLSession.shared.data(from: url)
-        return try JSONDecoder().decode(ModelClient.self, from: data)
+        return try JSONDecoder().decode(ModelClients.self, from: data)
     }
     
-    func searchClient(criteria : String) async throws -> ModelClient {
-        var params = URLComponents(string: "https://mecanicarubio.com/api/clients/search")!
-        
+    func searchClient(criteria : String) async throws -> ModelClients {
+        var params = URLComponents(string: "https://mecanicarubio.com/api/clients")!
+                
         params.queryItems = [
             URLQueryItem(name: "name", value: criteria)
         ]
@@ -24,15 +24,23 @@ extension DataRepository
             fatalError("Error url malformed")
         }
         
-        let(data, _) = try await URLSession.shared.data(from: url)
+        let(response, _) = try await URLSession.shared.data(from: url)
         
-        return try JSONDecoder().decode(ModelClient.self, from: data)
+        return try JSONDecoder().decode(ModelClients.self, from: response)
     }
     
-    func getServices(id : String) async throws -> ModelService {
-        let url = URL(string: "https://mecanicarubio.com/api/clients/services/\(id)")!
+    func getServices(id : String) async throws -> ModelServices {
+        let url = URL(string: "https://mecanicarubio.com/api/services")!
         let (data, _) = try await URLSession.shared.data(from: url)
-        return try JSONDecoder().decode(ModelService.self, from: data)
+        return try JSONDecoder().decode(ModelServices.self, from: data)
+    }
+    
+    func getServiceDetails() async throws {
+        let url = URL(string: "https://mecanicarubio.com/api/clients/services")!
+        let (response, _) = try await URLSession.shared.data(from: url)
+        let ModelServiceResponse = try JSONDecoder().decode(ModelService.self, from: response)
+        
+        print(ModelServiceResponse)
     }
     
     func getCryptoInvestments() async throws -> ModelCrypto {

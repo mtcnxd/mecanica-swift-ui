@@ -2,8 +2,9 @@ import SwiftUI
 
 struct ContentViewClients: View
 {
+    @StateObject var vmClients = ViewModelClients()
     @State var criteria : String = ""
-    @StateObject var api = ViewModelClients()
+    @State var isLoading : Bool = false
     
     var body: some View {
         VStack (alignment: .leading) {
@@ -12,17 +13,32 @@ struct ContentViewClients: View
                 TextField("Client", text: $criteria)
                 
                 Button(action: {
-                    api.searchClient(criteria: criteria)
+                    Task {
+                        await vmClients.getClientDetails(criteria: criteria)
+                    }
+
                 }) {
                     Image(systemName: "magnifyingglass")
                     Text("Buscar")
                 }
             }
             
-            List {
-                ForEach(api.clients){ client in
-                    ListViewRow(client: client)
+            if vmClients.isLoading {
+                ProgressView()
+            } else {
+                if let clients = vmClients.clients {
+                    List {
+                        ForEach(clients.data){ client in
+                            ListViewClient(client: client)
+                                .listRowSeparator(.hidden)
+                        }
+                    }
                 }
+            }
+        }
+        .task {
+            Task {
+                await vmClients.getClients()
             }
         }
         .padding(20)

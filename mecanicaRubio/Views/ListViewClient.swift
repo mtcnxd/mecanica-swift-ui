@@ -1,8 +1,8 @@
 import SwiftUI
 
-struct ListViewRow : View {
+struct ListViewClient : View {
     
-    let client : Client
+    let client : ModelClient
     
     @State var visible = false
     
@@ -11,7 +11,7 @@ struct ListViewRow : View {
             HStack {
                 Image(systemName: "person.circle")
                     .resizable()
-                    .frame(width: 30, height: 30)
+                    .frame(width: 43, height: 43)
                 
                 VStack (alignment: .leading) {
                     Text(client.name)
@@ -39,7 +39,6 @@ struct ListViewRow : View {
                 }
             }){
                 Image(systemName: "info.circle")
-                Text("Services")
             }
         }
         .padding(2)
@@ -51,13 +50,12 @@ struct ListViewRow : View {
 }
 
 #Preview {
-    ListViewRow(
-        client: Client(
+    ListViewClient(
+        client: ModelClient(
             id: 1,
             name: "Marcos Tzuc Cen",
             email: "mtc.nxd@gmail.com",
-            phone: "9991210261",
-            status: "Active"
+            phone: "9991210261"
         )
     )
 }

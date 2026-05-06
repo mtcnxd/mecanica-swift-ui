@@ -8,26 +8,61 @@
 import SwiftUI
 
 struct ContentViewServices: View {
+    
+    var services: [ModelService] = [
+        ModelService(
+            id: 1,
+            service_type: "Fallo",
+            fault: "Fallo en el motor, no arranca",
+            status: "Activo",
+            entry_date: "2025-05-03",
+            finished_date: "2025-05-01",
+            total: "100"
+        ),
+        ModelService(
+            id: 2,
+            service_type: "Mantenimiento",
+            fault: "Se lo cargo el payaso",
+            status: "Finalizado",
+            entry_date: "2025-05-03",
+            finished_date: "2025-05-01",
+            total: "100"
+        )
+    ]
+    
     var body: some View {
-        @State var username : String = ""
-        
         VStack {
-            HStack {
-                Text("Username:")
-                Spacer()
-                TextField("Username", text: $username)
-            }
-            
-            HStack {
-                Text("Password:")
-                Spacer()
-                TextField("Password", text: $username)
-            }
-            
-            Button("Login"){
-                print("Ok")
+            List {
+                ForEach(services) { service in
+                    ListViewService(service: service)
+                        .listRowSeparator(.hidden)
+                }
             }
         }
-        .padding(20)
     }
+}
+
+#Preview {
+    ContentViewServices(
+        services: [
+            ModelService(
+                id: 1,
+                service_type: "Fallo",
+                fault: "Fallo en el motor, no arranca",
+                status: "Activo",
+                entry_date: "2025-05-03",
+                finished_date: "2025-05-01",
+                total: "100"
+            ),
+            ModelService(
+                id: 1,
+                service_type: "Fallo",
+                fault: "Fallo en el motor, no arranca",
+                status: "Activo",
+                entry_date: "2025-05-03",
+                finished_date: "2025-05-01",
+                total: "100"
+            )
+        ]
+    )
 }

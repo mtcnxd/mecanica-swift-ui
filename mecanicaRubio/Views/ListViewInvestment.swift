@@ -12,15 +12,30 @@ struct ListViewInvestment : View {
     let investmentItem : InvestmentItem
         
     var body: some View {
-        HStack {
-            Text(investmentItem.name)
-                .font(.headline)
-                .padding(5)
-            Spacer()
-            Text(investmentItem.current_amount)
-                .font(.subheadline)
-                .padding(5)
+        VStack {
+            HStack {
+                Text(investmentItem.name)
+                    .font(.headline)
+                    .padding(5)
+                Spacer()
+                Text(formatToCurrency(value: investmentItem.current_amount), format: .currency(code: "MXN"))
+                    .font(.headline)
+                    .padding(.horizontal, 5)
+            }
+            
+            HStack {
+                Spacer()
+                Text(formatToCurrency(value: investmentItem.last_amount), format: .currency(code: "MXN"))
+                    .font(.caption)
+                    .foregroundColor(.gray)
+                    .padding(.trailing, 5)
+            }
         }
+        .padding(10)
+    }
+    
+    func formatToCurrency(value: String) -> Double {
+        return Double(value)!
     }
 }
 

@@ -24,7 +24,11 @@ struct ContentViewClients: View
             }
             
             if vmClients.isLoading {
-                ProgressView()
+                ZStack {
+                    ProgressView("Loading clients ...")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+                
             } else {
                 if let clients = vmClients.clients {
                     List {

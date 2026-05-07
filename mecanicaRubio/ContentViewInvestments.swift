@@ -2,12 +2,11 @@ import SwiftUI
 
 struct ContentViewInvestments: View {
     
-    @State var selected = "Yo te presto"
-    @State var balance = ""
-    @State var visible = false
-    
     @StateObject var vmInvestments = ViewModelInvestment()
-    @State var responseList: [InvestmentItem] = []
+    
+    @State var selected = "Yo te presto"
+    @State var visible = false
+    @State var balance = ""
     
     let options = [
         "Yo te presto",
@@ -17,8 +16,7 @@ struct ContentViewInvestments: View {
     ]
     
     var body: some View {
-        VStack (alignment: .leading) {
-            
+        VStack {
             HStack {
                 Picker("", selection: $selected){
                     ForEach(options, id: \.self) { item in
@@ -36,46 +34,47 @@ struct ContentViewInvestments: View {
                 Button(action: {
                     Task {
                         await vmInvestments.getInvestments()
-                        responseList = vmInvestments.investments
                     }
                     
                 }){
                     Image(systemName: "square.and.arrow.down")
                     Text("Get Balances")
                 }
-
             }
             
-            VStack {
-                if (vmInvestments.isLoading){
-                    ProgressView()
-                } else if let error = vmInvestments.errorMessage {
-                    Text(error)
-                } else {
+            if (vmInvestments.isLoading){
+                ZStack {
+                    ProgressView("Loading investments ...")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+                
+            } else if let error = vmInvestments.errorMessage {
+                Spacer()
+                Text(error)
+            } else {
+                VStack {
                     List {
-                        ForEach(responseList) { item in
+                        ForEach(vmInvestments.investments) { item in
                             ListViewInvestment(investmentItem: item)
                         }
                     }
                 }
-            }
-            .onChange(of: vmInvestments.errorMessage) {
-                if vmInvestments.errorMessage != nil {
-                    visible = true
-                    print("Error message")
+                .onChange(of: vmInvestments.errorMessage) {
+                    if vmInvestments.errorMessage != nil {
+                        visible = true
+                    }
+                }
+                .alert(isPresented: $visible) {
+                    Alert(
+                        title: Text("Error retriving data"),
+                        message: Text(vmInvestments.errorMessage!),
+                        primaryButton: .default(Text("Accept")),
+                        secondaryButton: .default(Text("Close"))
+                    )
                 }
             }
-            .alert(isPresented: $visible) {
-                Alert(
-                    title: Text("Error retriving data"),
-                    message: Text(vmInvestments.errorMessage!),
-                    primaryButton: .default(Text("Accept")),
-                    secondaryButton: .default(Text("Close"))
-                )
-            }
-            
         }
-        .padding(20)
+        .padding(10)
     }
 }
 

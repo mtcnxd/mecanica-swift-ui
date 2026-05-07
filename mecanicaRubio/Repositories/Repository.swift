@@ -29,18 +29,37 @@ extension DataRepository
         return try JSONDecoder().decode(ModelClients.self, from: response)
     }
     
-    func getServices(id : String) async throws -> ModelServices {
-        let url = URL(string: "https://mecanicarubio.com/api/services")!
+    func getServices() async throws -> ModelServices {
+        let url = URL(string: "http://127.0.0.1:8000/api/services")!
         let (data, _) = try await URLSession.shared.data(from: url)
+        /*
+        if let jsonString = String(data: data, encoding: .utf8) {
+            print(jsonString)
+        }
+        */
         return try JSONDecoder().decode(ModelServices.self, from: data)
     }
     
-    func getServiceDetails() async throws {
-        let url = URL(string: "https://mecanicarubio.com/api/clients/services")!
-        let (response, _) = try await URLSession.shared.data(from: url)
-        let ModelServiceResponse = try JSONDecoder().decode(ModelService.self, from: response)
+    func getServiceDetails(id : String) async throws -> ModelService {
+        let url = URL(string: "http://127.0.0.1:8000/api/clients/services")!
+        let (data, _) = try await URLSession.shared.data(from: url)
+        /*
+        if let jsonString = String(data: data, encoding: .utf8) {
+            print(jsonString)
+        }
+        */
+        return try JSONDecoder().decode(ModelService.self, from: data)
+    }
+    
+    func getInvestments() async throws -> ModelInvestment {
+        let url = URL(string: "https://mecanicarubio.com/api/investments")!
+        let (data, _) = try await URLSession.shared.data(from: url)
         
-        print(ModelServiceResponse)
+        if let jsonString = String(data: data, encoding: .utf8){
+            print(jsonString)
+        }
+        
+        return try JSONDecoder().decode(ModelInvestment.self, from: data)
     }
     
     func getCryptoInvestments() async throws -> ModelCrypto {
@@ -52,17 +71,6 @@ extension DataRepository
         }
         
         return try JSONDecoder().decode(ModelCrypto.self, from: data);
-    }
-    
-    func getInvestments() async throws -> ModelInvestment {
-        let url = URL(string: "https://mecanicarubio.com/api/investments/total")!
-        let (data, _) = try await URLSession.shared.data(from: url)
-        
-        if let jsonString = String(data: data, encoding: .utf8){
-            print(jsonString)
-        }
-        
-        return try JSONDecoder().decode(ModelInvestment.self, from: data)
     }
 }
 

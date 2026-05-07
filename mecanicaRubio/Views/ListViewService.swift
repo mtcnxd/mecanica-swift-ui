@@ -44,7 +44,7 @@ struct ListViewService : View {
                         Text("Entrada")
                             .font(.headline)
                             .foregroundColor(.gray)
-                        Text(service.entry_date)
+                        Text(service.entry_date ?? "")
                             .font(.caption2)
                     }
                     
@@ -54,8 +54,8 @@ struct ListViewService : View {
                         Text("Salida")
                             .font(.headline)
                             .foregroundColor(.gray)
-                        Text(service.finished_date)
-                            .font(.headline)
+                        Text(service.finished_date ?? "")
+                            .font(.caption2)
                     }
                 }
                 
@@ -98,7 +98,7 @@ struct ListViewService : View {
             status: "Activo",
             entry_date: "2025-05-03",
             finished_date: "2025-05-01",
-            total: "100"
+            total: 100
         )
     )
 }

@@ -10,13 +10,11 @@ class ViewModelClients : ObservableObject {
     
     init(repository: Repository = Repository()) {
         self.repository = repository
-        
-        print("Start class View Model Clients")
     }
         
     func getClients() async {
         isLoading = true
-        print("Loading clients list")
+
         do {
             clients = try await repository.getClients()
         } catch {
@@ -27,6 +25,7 @@ class ViewModelClients : ObservableObject {
     
     func getClientDetails(criteria : String) async {
         isLoading = true
+        
         do {
             clients = try await repository.searchClient(criteria: criteria)
         } catch {

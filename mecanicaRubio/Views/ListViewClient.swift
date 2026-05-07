@@ -33,9 +33,9 @@ struct ListViewClient : View {
                 print("client id: \(client.id)")
                 
                 Task {
-                    let info = try await Repository().getServices(id: String(client.id))
+                    // let info = try await Repository().getServices(id: String(client.id))
                     visible = true
-                    print(info.data)
+                    // print(info.data)
                 }
             }){
                 Image(systemName: "info.circle")

@@ -10,7 +10,7 @@ struct ModelService : Codable, Identifiable {
     let service_type: String
     let fault : String
     let status : String
-    let entry_date: String
-    let finished_date : String
-    let total : String
+    let entry_date: String?
+    let finished_date : String?
+    let total : Int
 }

@@ -31,7 +31,6 @@ struct ListViewInvestment : View {
                     .padding(.trailing, 5)
             }
         }
-        .padding(10)
     }
     
     func formatToCurrency(value: String) -> Double {

@@ -13,7 +13,7 @@ extension DataRepository
         return try JSONDecoder().decode(ModelClients.self, from: data)
     }
     
-    func searchClient(criteria : String) async throws -> ModelClients {
+    func getClientsResults(criteria : String) async throws -> ModelClients {
         var params = URLComponents(string: "https://mecanicarubio.com/api/clients")!
                 
         params.queryItems = [
@@ -27,6 +27,18 @@ extension DataRepository
         let(response, _) = try await URLSession.shared.data(from: url)
         
         return try JSONDecoder().decode(ModelClients.self, from: response)
+    }
+    
+    func getClientDetails(id: Int) async throws -> ModelClientResponse {
+        let url = URL(string: "https://mecanicarubio.com/api/clients/\(id)")!
+                        
+        let(data, _) = try await URLSession.shared.data(from: url)
+        /*
+        if let jsonString = String(data: data, encoding: .utf8) {
+            print(jsonString)
+        }
+        */
+        return try JSONDecoder().decode(ModelClientResponse.self, from: data)
     }
     
     func getServices() async throws -> ModelServices {
@@ -54,11 +66,11 @@ extension DataRepository
     func getInvestments() async throws -> ModelInvestment {
         let url = URL(string: "https://mecanicarubio.com/api/investments")!
         let (data, _) = try await URLSession.shared.data(from: url)
-        
+        /*
         if let jsonString = String(data: data, encoding: .utf8){
             print(jsonString)
         }
-        
+        */
         return try JSONDecoder().decode(ModelInvestment.self, from: data)
     }
     

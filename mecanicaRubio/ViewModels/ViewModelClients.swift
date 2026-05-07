@@ -3,8 +3,9 @@ import Combine
 
 class ViewModelClients : ObservableObject {
 
-    @Published var clients: ModelClients?
     @Published var isLoading: Bool = false
+    @Published var clients: ModelClients?
+    @Published var clientDetails: ModelClientDetails?
     
     private let repository: Repository
     
@@ -20,17 +21,32 @@ class ViewModelClients : ObservableObject {
         } catch {
             print (error)
         }
+        
         isLoading = false
     }
     
-    func getClientDetails(criteria : String) async {
+    func getClientResults(criteria : String) async {
         isLoading = true
         
         do {
-            clients = try await repository.searchClient(criteria: criteria)
+            clients = try await repository.getClientsResults(criteria: criteria)
         } catch {
             print(error)
         }
+        
+        isLoading = false
+    }
+    
+    func getClientDetails(id : Int) async {
+        isLoading = true
+
+        do {
+            let response = try await repository.getClientDetails(id: id)
+            clientDetails = response.data
+        } catch {
+            print(error)
+        }
+
         isLoading = false
     }
 }

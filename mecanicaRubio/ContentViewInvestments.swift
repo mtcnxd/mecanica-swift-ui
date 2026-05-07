@@ -58,6 +58,7 @@ struct ContentViewInvestments: View {
                             ListViewInvestment(investmentItem: item)
                         }
                     }
+                    .scrollContentBackground(.hidden) // Oculta el fondo gris que esta bajo la lista
                 }
                 .onChange(of: vmInvestments.errorMessage) {
                     if vmInvestments.errorMessage != nil {

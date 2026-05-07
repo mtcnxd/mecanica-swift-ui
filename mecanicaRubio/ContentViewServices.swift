@@ -13,14 +13,15 @@ struct ContentViewServices: View {
                 }
             } else {
                 if let services = vmServices.services {
-                    let _ = print(services.data)
-                    
                     List {
                         ForEach(services.data) { service in
                             ListViewService(service: service)
                                 .listRowSeparator(.hidden)
+                                .listRowBackground(Color.clear)
                         }
                     }
+                    .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
                 }
             }
         }

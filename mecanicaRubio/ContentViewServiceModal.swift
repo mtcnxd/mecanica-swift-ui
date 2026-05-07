@@ -1,38 +1,80 @@
-//
-//  ContentViewServiceDetails.swift
-//  mecanicaRubio
-//
-//  Created by mtcnxd on 27/01/26.
-//
-
 import SwiftUI
 
 struct ContentViewServiceModal: View {
-    @State var car : String
+    
+    @State var clientDetails : ModelClientDetails
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         VStack {
             Form {
-                Section(header: Text("Detalles de servicio")
+                Section(header: Text("Client Details")
                     .bold()
+                    .font(.title2)
+                    .padding(.bottom, 10)
                 ){
-                    TextField("Car:", text: $car).padding(2).foregroundColor(Color.gray)
-                    TextField("Fault:", text: $car).padding(2)
-                    TextField("Started:", text: $car).padding(2)
-                    TextField("Finished:", text: $car).padding(2)
-                    TextField("Status:", text: $car).padding(2)
-                    TextField("Total:", text: $car).padding(2)
-                }
-                
-                Button("Cerrar"){
+                    HStack {
+                        Text("Client:").bold()
+                        Spacer()
+                        Text(clientDetails.name)
+                    }
                     
+                    HStack {
+                        Text("Email:").bold()
+                        Spacer()
+                        Text(clientDetails.email)
+                    }
+                    
+                    HStack {
+                        Text("Phone:").bold()
+                        Spacer()
+                        Text(clientDetails.phone)
+                    }
+                    
+                    HStack {
+                        Text("Street:").bold()
+                        Spacer()
+                        Text(clientDetails.street ?? "")
+                    }
+                    
+                    HStack {
+                        Text("Postcode").bold()
+                        Spacer()
+                        Text(clientDetails.postcode)
+                    }
                 }
-            }
-        }
-        .padding(40)
+                .padding(.bottom, 10)
+                
+                HStack {
+                    Spacer()
+                    Button("Close"){
+                        dismiss()
+                    }
+                }
+                .frame(alignment: .trailing)
+                
+            } // form
+
+        } // main vstack
+        .padding(30)
     }
 }
 
 #Preview {
-    ContentViewServiceModal(car: "Nissan Versa")
+    ContentViewServiceModal(
+        clientDetails: ModelClientDetails(
+            id: 1,
+            name: "Marcos Tzuc Cen",
+            email: "mtc.nxd@gmail.com",
+            phone: "9991210261",
+            postcode: "97173",
+            street: "Esta es una prueba de calle",
+            address: "",
+            city: "Merida",
+            state: "Yucatan",
+            rfc: nil,
+            comments: nil,
+            status: "Activo",
+            created_at: "")
+    )
 }

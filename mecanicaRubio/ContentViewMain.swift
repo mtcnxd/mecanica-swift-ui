@@ -16,7 +16,9 @@ struct ContentViewMain: View
                 
             }
             .listStyle(.sidebar)
-                
+            .navigationTitle("Mecanica")
+            .navigationSplitViewColumnWidth(min: 200, ideal: 250, max: 300)
+
         } detail: {
                switch selection {
                    case .clients:

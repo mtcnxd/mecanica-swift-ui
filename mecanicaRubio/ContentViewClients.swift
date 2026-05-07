@@ -14,7 +14,7 @@ struct ContentViewClients: View
                 
                 Button(action: {
                     Task {
-                        await vmClients.getClientDetails(criteria: criteria)
+                        await vmClients.getClientResults(criteria: criteria)
                     }
 
                 }) {
@@ -34,9 +34,10 @@ struct ContentViewClients: View
                     List {
                         ForEach(clients.data){ client in
                             ListViewClient(client: client)
-                                .listRowSeparator(.hidden)
+                                .listRowSeparator(.hidden) // Oculta la linea que divide los rows
                         }
                     }
+                    .scrollContentBackground(.hidden) // Oculta el fondo predeterminado
                 }
             }
         }
@@ -47,4 +48,13 @@ struct ContentViewClients: View
         }
         .padding(20)
     }
+}
+
+
+#Preview {
+    ContentViewClients(
+        vmClients: ViewModelClients(),
+        criteria: "uriel",
+        isLoading: true
+    )
 }

@@ -10,6 +10,8 @@ struct ListViewService : View {
     
     let service : ModelService
     
+    // @State var serviceId : String 
+    
     var body: some View {
             VStack(alignment: .leading, spacing: 10) {
                 
@@ -33,9 +35,14 @@ struct ListViewService : View {
                 Text(service.service_type)
                     .font(.headline)
                 
-                Text(service.fault)
-                    .font(.headline)
-                    .foregroundColor(.secondary)
+                Button(action: {
+
+                }){
+                    Text(service.fault)
+                        .font(.headline)
+                        .foregroundColor(.secondary)
+                }
+                .buttonStyle(.plain)
                 
                 Divider()
                 

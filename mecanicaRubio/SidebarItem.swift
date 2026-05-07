@@ -7,17 +7,17 @@ enum SidebarItem: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .clients: return "Clientes"
-        case .services: return "Services"
-        case .investments: return "Investments"
+            case .clients: return "Clientes"
+            case .services: return "Servicios"
+            case .investments: return "Inversiones"
         }
     }
 
     var icon: String {
         switch self {
-        case .clients: return "person"
-        case .services: return "car"
-        case .investments: return "chart.line.uptrend.xyaxis"
+            case .clients: return "person"
+            case .services: return "car"
+            case .investments: return "chart.line.uptrend.xyaxis"
         }
     }
 }

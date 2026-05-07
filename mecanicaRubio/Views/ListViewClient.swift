@@ -4,25 +4,22 @@ struct ListViewClient : View {
     
     let client : ModelClient
     
-    @State var visible = false
+    @StateObject private var vmClients = ViewModelClients()
     
     var body: some View {
         HStack {
             HStack {
                 Image(systemName: "person.circle")
                     .resizable()
-                    .frame(width: 43, height: 43)
+                    .frame(width: 35, height: 35)
                 
                 VStack (alignment: .leading) {
                     Text(client.name)
-                        .font(.headline)
+                        .font(.subheadline)
                     
                     Text(client.phone)
-                        .font(.subheadline)
-                    
-                    Text(client.email)
-                        .font(.subheadline)
-                        .foregroundStyle(.blue)
+                        .font(.caption)
+                        .foregroundColor(.gray)
                 }
             
             }
@@ -30,22 +27,19 @@ struct ListViewClient : View {
             Spacer()
             
             Button(action: {
-                print("client id: \(client.id)")
-                
                 Task {
-                    // let info = try await Repository().getServices(id: String(client.id))
-                    visible = true
-                    // print(info.data)
+                    print(client.id)
+                    await vmClients.getClientDetails(id: client.id)
                 }
             }){
                 Image(systemName: "info.circle")
             }
         }
         .padding(2)
-        .sheet(isPresented: $visible){
-            ContentViewServiceModal(car: "Nissan")
+        .sheet(item: $vmClients.clientDetails) { clientDetails in
+            let _ = print(clientDetails)
+            ContentViewServiceModal(clientDetails: clientDetails)
         }
-        
     }
 }
 
